@@ -1,80 +1,69 @@
 import 'package:flutter/material.dart';
-import 'dart:math';
+// import 'widgets/buttons.dart'; // giving reference to buttons.dart
+
 void main() => runApp(Abhay());
 
-class Abhay extends StatelessWidget {
-  Abhay({super.key});
-  var guess = TextEditingController();
- 
- callback(){
- 
+class Abhay extends StatefulWidget {
+  const Abhay({super.key});
 
+  @override
+  State<Abhay> createState() => AbhayState();
+}
 
-  var rng = Random();
-  var number=rng.nextInt(100);
-  int nguesses=1;
-  int passGuess;
-  // int guess;
-  // print(number); // printing te number
-
-  do { 
-      print("Guess the number between 1 to 100\n"); 
-      passGuess =int.parse(guess.text);
-    if(passGuess > number){
-      print("Lower the number please\n");
-    }
-    else if(passGuess<number){
-      print("Higher the number please\n");
-    }
-    else{
-      print("you guessed in $nguesses attempts\n ");
-    }
-    
-      nguesses++; 
-   }
-   while(passGuess!=number); 
-
-  }
-
-
-
-
-
-
+class AbhayState extends State<Abhay> {
+  var count = 0;
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        home: Scaffold(
-      appBar: AppBar(
-        title: const Text('Flutter Form'),
-        backgroundColor: Colors.redAccent,
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(13.0),
-        child: Column(
-          children: [
-            const SizedBox(height: 10),
-            TextField(
-              decoration: const InputDecoration(labelText: "Enter the number"),
-              controller: guess,
-              keyboardType: TextInputType.number,
-             
-            ),
-            const SizedBox(
-              height: 15,
-            ),
-            
-            ElevatedButton(
-                onPressed: () {
+      home: Scaffold(
+          appBar: AppBar(
+            title: Text("Simple Counter App"),
+            backgroundColor: Colors.red,
+          ),
+          body: Center(
+            child: Container(
+              width: double.infinity,
+              height: double.infinity,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "Counter: $count ",
+                    style: TextStyle(fontSize: 35),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  SizedBox(
+                    width: 60,
+                    height: 40,
+                    child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.red,
+                          foregroundColor: Colors.white,
+                        ),
+                        onPressed: () {
+                          count++;
+                          setState(() {});
+                        },
+                        child: Text("+", style: TextStyle(fontSize: 25))),
+                  ),
+                  SizedBox(height: 40,),
+
+                  ElevatedButton(
+                      onPressed: () {
+                        count = 0;
                   
-                  callback();
-                  
-                //  print("Password = $pass");
-                },
-                child: const Text('submit'))
-          ],
-        ),
-      ),
-    ));
+                        setState(() {});
+                      },
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.red,
+                          foregroundColor: Colors.white),
+                      child: Icon(Icons.delete))
+                ],
+              ),
+            ),
+          )),
+    );
   }
 }
