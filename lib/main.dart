@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-// import 'widgets/buttons.dart'; // giving reference to buttons.dart
+import 'dart:math';
 
 void main() => runApp(Abhay());
 
@@ -12,56 +12,81 @@ class Abhay extends StatefulWidget {
 
 class AbhayState extends State<Abhay> {
   var count = 0;
+  // creating a random number
+  var rand = Random().nextInt(100);
+
+  var no1controller = TextEditingController();
+  String guess = "Enter the number";
+  String result = "";
+
+  condition() {
+    var no1 = int.parse(no1controller.text.toString());
+
+    if (no1 == rand) {
+      guess = "Your guess is right: $rand";
+      result = "You guessed in $count attempts";
+    } else if (no1 > rand) {
+      guess = "Lower the number please";
+    } else {
+      guess = "Higher the number please";
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
           appBar: AppBar(
-            title: Text("Simple Counter App"),
+            title: Text("Guess The Number"),
             backgroundColor: Colors.red,
           ),
-          body: Center(
-            child: Container(
-              width: double.infinity,
-              height: double.infinity,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "Counter: $count ",
-                    style: TextStyle(fontSize: 35),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  SizedBox(
-                    width: 60,
-                    height: 40,
-                    child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.red,
-                          foregroundColor: Colors.white,
-                        ),
-                        onPressed: () {
-                          count++;
-                          setState(() {});
-                        },
-                        child: Text("+", style: TextStyle(fontSize: 25))),
-                  ),
-                  SizedBox(height: 40,),
+          body: Padding(
+            padding: const EdgeInsets.all(14.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(guess, style: TextStyle(fontSize: 22)),
+                TextField(
+                  controller: no1controller,
+                  keyboardType: TextInputType.number,
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor: Colors.white,
+                      backgroundColor: Colors.red,
+                    ),
+                    onPressed: () {
+                      count++;
+                      condition();
+                      setState(() {});
+                    },
+                    child: Text("Guess")),
+                SizedBox(
+                  height: 20,
+                ),
+                Text(
+                  result,
+                  style: TextStyle(fontSize: 15),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.redAccent,
+                    ),
+                    onPressed: () {
+                      result = "";
+                      count = 0;
+                      guess = "";
 
-                  ElevatedButton(
-                      onPressed: () {
-                        count = 0;
-                  
-                        setState(() {});
-                      },
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.red,
-                          foregroundColor: Colors.white),
-                      child: Icon(Icons.delete))
-                ],
-              ),
+                      setState(() {});
+                    },
+                    child: Icon(Icons.delete))
+              ],
             ),
           )),
     );
