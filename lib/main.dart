@@ -18,6 +18,9 @@ class AbhayState extends State<Abhay> {
   var no1controller = TextEditingController();
   String guess = "Enter the number";
   String result = "";
+  rando() {
+    rand = Random().nextInt(100);
+  }
 
   condition() {
     var no1 = int.parse(no1controller.text.toString());
@@ -82,6 +85,7 @@ class AbhayState extends State<Abhay> {
                       result = "";
                       count = 0;
                       guess = "";
+                      rando();
 
                       setState(() {});
                     },
